@@ -23,7 +23,7 @@ class TNChecker(object):
         self.tnc = tnCalls(config, self.db)
         self.verifier = verifier(config, self.db)
 
-        self.lastScannedBlock = self.db.lastScannedBlock("TN")
+        self.lastScannedBlock = self.db.lastScannedBlock("DCC")
 
     def run(self):
         #main routine to run continuesly
@@ -31,17 +31,17 @@ class TNChecker(object):
 
         while True:
             try:
-                nextblock = self.tnc.currentBlock() - self.config['tn']['confirmations']
+                nextblock = self.tnc.currentBlock() - self.config['dcc']['confirmations']
 
                 if nextblock > self.lastScannedBlock:
                     self.lastScannedBlock += 1
                     self.checkBlock(self.lastScannedBlock)
-                    self.db.updHeights(self.lastScannedBlock, 'TN')
+                    self.db.updHeights(self.lastScannedBlock, 'DCC')
             except Exception as e:
                 self.lastScannedBlock -= 1
                 print('ERROR: Something went wrong during tn block iteration: ' + str(traceback.TracebackException.from_exception(e)))
 
-            time.sleep(self.config['tn']['timeInBetweenChecks'])
+            time.sleep(self.config['dcc']['timeInBetweenChecks'])
 
     def checkBlock(self, heightToCheck):
         #check content of the block for valid transactions
@@ -55,7 +55,7 @@ class TNChecker(object):
                         self.faultHandler(transaction, "txerror")
                     else:
                         targetAddress = otherCalls(self.config, self.db).normalizeAddress(targetAddress)
-                        amount = transaction['amount'] / pow(10, self.config['tn']['decimals'])
+                        amount = transaction['amount'] / pow(10, self.config['dcc']['decimals'])
                         amount = round(amount, 8)
                         
                         if amount < self.config['main']['min'] or amount > self.config['main']['max']:
@@ -93,7 +93,7 @@ class TNChecker(object):
         
     def faultHandler(self, tx, error, e=""):
         #handle transfers to the gateway that have problems
-        amount = tx['amount'] / pow(10, self.config['tn']['decimals'])
+        amount = tx['amount'] / pow(10, self.config['dcc']['decimals'])
         timestampStr = sharedfunc.getnow()
 
         if error == "noattachment":

@@ -55,7 +55,7 @@ The config.json file includes all necessary settings that need to be configured 
         "confirmations": <number of confirmations necessary in order to accept a transaction>,
         "network": "Bitcoin"
     },
-    "tn": {
+    "DCC": {
         "gatewayAddress": "<TN address of the gateway>",
         "gatewaySeed": "<seed of the above devined address>",
         "coldwallet": "<TN address of the gateway's cold wallet (if in use)>",

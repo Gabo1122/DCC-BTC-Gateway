@@ -18,14 +18,14 @@ class tnCalls(object):
         else:
             self.db = db
 
-        self.node = self.config['tn']['node']
+        self.node = self.config['dcc']['node']
 
         self.pwTN = PyCWaves.PyCWaves()
         self.pwTN.THROW_EXCEPTION_ON_ERROR = True
-        self.pwTN.setNode(node=self.config['tn']['node'], chain=self.config['tn']['network'], chain_id=self.config['tn']['chainid'])
-        seed = os.getenv(self.config['tn']['seedenvname'], self.config['tn']['gatewaySeed'])
+        self.pwTN.setNode(node=self.config['dcc']['node'], chain=self.config['dcc']['network'], chain_id=self.config['dcc']['chainid'])
+        seed = os.getenv(self.config['dcc']['seedenvname'], self.config['dcc']['gatewaySeed'])
         self.tnAddress = self.pwTN.Address(seed=seed)
-        self.tnAsset = self.pwTN.Asset(self.config['tn']['assetId'])
+        self.tnAsset = self.pwTN.Asset(self.config['dcc']['assetId'])
 
     def currentBlock(self):
         result = requests.get(self.node + '/blocks/height').json()['height'] - 1
@@ -36,8 +36,8 @@ class tnCalls(object):
         return requests.get(self.node + '/blocks/at/' + str(height)).json()
 
     def currentBalance(self):
-        myBalance = self.tnAddress.balance(assetId=self.config['tn']['assetId'])
-        myBalance /= pow(10, self.config['tn']['decimals'])
+        myBalance = self.tnAddress.balance(assetId=self.config['dcc']['assetId'])
+        myBalance /= pow(10, self.config['dcc']['decimals'])
 
         return myBalance
 
@@ -50,20 +50,20 @@ class tnCalls(object):
             verified = self.pwTN.tx(tx['id'])
 
             if verified['height'] > 0:
-                self.db.insVerified("TN", tx['id'], verified['height'])
+                self.db.insVerified("DCC", tx['id'], verified['height'])
                 print('INFO: tx to tn verified!')
 
                 self.db.delTunnel(sourceAddress, targetAddress)
             else:
-                self.db.insVerified("TN", tx['id'], 0)
+                self.db.insVerified("DCC", tx['id'], 0)
                 print('WARN: tx to tn not verified!')
         except:
-            self.db.insVerified("TN", tx['id'], 0)
+            self.db.insVerified("DCC", tx['id'], 0)
             print('WARN: tx to tn not verified!')
 
     def checkTx(self, tx):
         #check the transaction
-        if tx['type'] == 4 and tx['recipient'] == self.config['tn']['gatewayAddress'] and tx['assetId'] == self.config['tn']['assetId']:
+        if tx['type'] == 4 and tx['recipient'] == self.config['dcc']['gatewayAddress'] and tx['assetId'] == self.config['dcc']['assetId']:
             #check if there is an attachment
             targetAddress = base58.b58decode(tx['attachment']).decode()
             if len(targetAddress) > 1:
@@ -77,7 +77,7 @@ class tnCalls(object):
 
     def sendTx(self, address, amount, attachment):
         addr = self.pwTN.Address(address)
-        if self.config['tn']['assetId'] == 'TN':
+        if self.config['dcc']['assetId'] == 'DCC':
             tx = self.tnAddress.sendWaves(addr, amount, attachment, txFee=2000000)
         else:
             tx = self.tnAddress.sendAsset(addr, self.tnAsset, amount, attachment, txFee=2000000)

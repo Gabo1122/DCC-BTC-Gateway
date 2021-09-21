@@ -68,11 +68,11 @@ class OtherChecker(object):
                     if txContinue:
                         targetAddress = res
                         amount = float(txInfo['amount'])
-                        amount -= self.config['tn']['fee']
-                        amount *= pow(10, self.config['tn']['decimals'])
+                        amount -= self.config['dcc']['fee']
+                        amount *= pow(10, self.config['dcc']['decimals'])
                         amount = int(round(amount))
 
-                        amountCheck = amount / pow(10, self.config['tn']['decimals'])
+                        amountCheck = amount / pow(10, self.config['dcc']['decimals'])
                         if amountCheck < self.config['main']['min'] or amountCheck > self.config['main']['max']:
                             txInfo['recipient'] = targetAddress
                             self.faultHandler(txInfo, "senderror", e='outside amount ranges')
@@ -89,7 +89,7 @@ class OtherChecker(object):
                                 else:
                                     print("INFO: send tx: " + str(tx))
 
-                                    self.db.insExecuted(txInfo['sender'], targetAddress, txInfo['id'], tx['id'], amountCheck, self.config['tn']['fee'])
+                                    self.db.insExecuted(txInfo['sender'], targetAddress, txInfo['id'], tx['id'], amountCheck, self.config['dcc']['fee'])
                                     print('INFO: send tokens from eth to tn!')
 
                                     #self.db.delTunnel(txInfo['sender'], targetAddress)

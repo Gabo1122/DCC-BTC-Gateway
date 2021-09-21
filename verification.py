@@ -93,11 +93,11 @@ class verifier(object):
                     return {'txVerified': False, 'tx': tx, 'block': result} 
 
     def checkHealth(self):
-        connTN = self.chConnection('TN')
+        connTN = self.chConnection('DCC')
         connOther = self.chConnection('other')
-        heightTN = self.chHeight('TN')
+        heightTN = self.chHeight('DCC')
         heightOther = self.chHeight('other')
-        balanceTN = self.chBalance('TN')
+        balanceTN = self.chBalance('DCC')
         balanceOther = self.chBalance('other')
         numErrors = self.chErrors()
 
@@ -126,13 +126,13 @@ class verifier(object):
         
         result = {
             "chainName": self.config['main']['name'],
-            "assetID": self.config['tn']['assetId'],
+            "assetID": self.config['dcc']['assetId'],
             "status": status,
-            "connectionTN": connTN,
+            "connectionDCC": connTN,
             "connectionOther": connOther,
-            "blocksbehindTN": heightTN,
+            "blocksbehindDCC": heightTN,
             "blockbehindOther": heightOther,
-            "balanceTN": balanceTN,
+            "balanceDCC": balanceTN,
             "balanceOther": balanceOther,
             "numberErrors": numErrors
         }
@@ -140,7 +140,7 @@ class verifier(object):
         return result
 
     def chConnection(self, chain):
-        if chain == 'TN':
+        if chain == 'DCC':
             try:
                 value = self.tnc.currentBlock()
             except:
@@ -157,13 +157,13 @@ class verifier(object):
             return False
 
     def chHeight(self, chain):
-        if chain == 'TN':
+        if chain == 'DCC':
             try:
-                current = self.tnc.currentBlock() - self.config["tn"]["confirmations"]
+                current = self.tnc.currentBlock() - self.config["DCC"]["confirmations"]
             except:
                 current = 0
 
-            lastscanned = self.db.lastScannedBlock("TN")
+            lastscanned = self.db.lastScannedBlock("DCC")
         else:
             try:
                 current = self.otc.currentBlock() - self.config["other"]["confirmations"]
@@ -179,7 +179,7 @@ class verifier(object):
             return -1
 
     def chBalance(self, chain):
-        if chain == 'TN':
+        if chain == 'DCC':
             try:
                 current = self.tnc.currentBalance()
             except:

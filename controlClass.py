@@ -34,7 +34,7 @@ class controller(object):
         if len(to_verify) > 0:
             for txV in to_verify:
 
-                if txV[1] != 'TN':
+                if txV[1] != 'DCC':
                     print("INFO: verify tx: " + txV[2])
                     tx = txV[2]
                     self.otc.verifyTx(tx)
@@ -45,7 +45,7 @@ class controller(object):
 
         while True:
             #print("INFO: Last scanned Other block: " + str(self.db.lastScannedBlock("Other")))
-            #print("INFO: Last scanned TN block: " + str(self.db.lastScannedBlock("TN")))
+            #print("INFO: Last scanned TN block: " + str(self.db.lastScannedBlock("DCC")))
 
             #handle tunnels on status 'verifying'
             to_verify = self.db.getTunnels(status='verifying')

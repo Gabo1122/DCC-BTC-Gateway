@@ -157,23 +157,23 @@ async def index(request: Request):
     if index == "": index = "index.html"
     return templates.TemplateResponse(index, {"request": request,
                                               "chainName": config['main']['name'],
-                                              "assetID": config['tn']['assetId'],
-                                              "tn_gateway_fee": config['tn']['gateway_fee'],
-                                              "tn_network_fee": config['tn']['network_fee'],
-                                              "tn_total_fee": config['tn']['network_fee'] + config['tn']['gateway_fee'],
+                                              "assetID": config['dcc']['assetId'],
+                                              "tn_gateway_fee": config['dcc']['gateway_fee'],
+                                              "tn_network_fee": config['dcc']['network_fee'],
+                                              "tn_total_fee": config['dcc']['network_fee'] + config['dcc']['gateway_fee'],
                                               "eth_gateway_fee": config['other']['gateway_fee'],
                                               "eth_network_fee": config['other']['network_fee'],
                                               "eth_total_fee": config['other']['network_fee'] + config['other'][
                                                   'gateway_fee'],
-                                              "fee": config['tn']['fee'],
+                                              "fee": config['dcc']['fee'],
                                               "company": config['main']['company'],
                                               "email": config['main']['contact-email'],
                                               "telegram": config['main']['contact-telegram'],
                                               "recovery_amount": config['main']['recovery_amount'],
                                               "recovery_fee": config['main']['recovery_fee'],
                                               "ethHeight": heights['Other'],
-                                              "tnHeight": heights['TN'],
-                                              "tnAddress": config['tn']['gatewayAddress'],
+                                              "tnHeight": heights['DCC'],
+                                              "tnAddress": config['dcc']['gatewayAddress'],
                                               "ethAddress": config['other']['gatewayAddress'],
                                               "disclaimer": config['main']['disclaimer']})
 
@@ -182,7 +182,7 @@ async def index(request: Request):
 async def getHeights():
     result = dbc.getHeights()
 
-    return {'TN': result[0][1], 'Other': result[1][1]}
+    return {'DCC': result[0][1], 'Other': result[1][1]}
 
 
 @app.get('/errors')
@@ -229,7 +229,7 @@ async def createTunnel(targetAddress: str):
     if not tnCalls(config, dbc).validateaddress(targetAddress):
         return cExecResult(successful=0, address='')
 
-    if targetAddress == config['tn']['gatewayAddress']:
+    if targetAddress == config['dcc']['gatewayAddress']:
         return {'successful': '0'}
 
     result = dbc.getSourceAddress(targetAddress)
@@ -249,23 +249,23 @@ async def api_fullinfo():
     tnBalance = get_tnBalance()
     otherBalance = get_otherBalance()
     return {"chainName": config['main']['name'],
-            "assetID": config['tn']['assetId'],
-            "tn_gateway_fee": config['tn']['gateway_fee'],
-            "tn_network_fee": config['tn']['network_fee'],
-            "tn_total_fee": config['tn']['network_fee'] + config['tn']['gateway_fee'],
+            "assetID": config['dcc']['assetId'],
+            "tn_gateway_fee": config['dcc']['gateway_fee'],
+            "tn_network_fee": config['dcc']['network_fee'],
+            "tn_total_fee": config['dcc']['network_fee'] + config['dcc']['gateway_fee'],
             "other_gateway_fee": config['other']['gateway_fee'],
             "other_network_fee": config['other']['network_fee'],
             "other_total_fee": config['other']['network_fee'] + config['other']['gateway_fee'],
-            "fee": config['tn']['fee'],
+            "fee": config['dcc']['fee'],
             "company": config['main']['company'],
             "email": config['main']['contact-email'],
             "telegram": config['main']['contact-telegram'],
             "recovery_amount": config['main']['recovery_amount'],
             "recovery_fee": config['main']['recovery_fee'],
             "otherHeight": heights['Other'],
-            "tnHeight": heights['TN'],
-            "tnAddress": config['tn']['gatewayAddress'],
-            "tnColdAddress": config['tn']['coldwallet'],
+            "tnHeight": heights['DCC'],
+            "tnAddress": config['dcc']['gatewayAddress'],
+            "tnColdAddress": config['dcc']['coldwallet'],
             "otherAddress": config['other']['gatewayAddress'],
             "otherNetwork": config['other']['network'],
             "disclaimer": config['main']['disclaimer'],

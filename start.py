@@ -19,7 +19,7 @@ with open('config.json') as json_file:
 def initialisedb(db):
     #get current TN block:
     tnlatestBlock = tnCalls(config).currentBlock()
-    db.insHeights(tnlatestBlock, 'TN')
+    db.insHeights(tnlatestBlock, 'DCC')
 
     #get current Other block:
     ethlatestBlock = otherCalls(config).currentBlock()
@@ -53,7 +53,7 @@ def main():
                 sys.exit()
         else:
             try:
-                result = dbc.lastScannedBlock("TN")
+                result = dbc.lastScannedBlock("DCC")
 
                 if not isinstance(result, int):
                     if len(result) == 0:
@@ -66,7 +66,7 @@ def main():
         dbc = dbCalls(config)
 
         try:
-            result = dbc.lastScannedBlock("TN")
+            result = dbc.lastScannedBlock("DCC")
 
             if not isinstance(result, int):
                 if len(result) == 0:
