@@ -1,6 +1,6 @@
-# TN <-> BTC Platform Gateway Framework
+# DCC <-> BTC Platform Gateway Framework
 
-Inspired by Hawky's Waves-ERC20 Gateway: https://github.com/PyWaves/Waves-ERC20-Gateway
+Inspired by TN Gateway inspired byHawky's Waves-ERC20 Gateway: https://github.com/PyWaves/Waves-ERC20-Gateway
 But rewritten to be published under FOSS license.
 
 This framework allows to easily establish a gateway between any BTC chain and the
