@@ -2,6 +2,7 @@
 
 ![alt text](https://decentralchain.io/wp-content/uploads/2021/10/dcc-gateway.png)
 
+In order to give DecentralChain users access to an even wider utility we integrated a Bitcoin gateway that will allow users to deposit BTC from the Bitcoin network and interact with other tokens in our ecosystem, trade with BTC pairs and buy NFTs, in the same way users will be able to withdraw BTC out from DecentralChain to the Bitcoin network.
 
 Inspired by TN Gateway inspired byHawky's Waves-ERC20 Gateway: https://github.com/PyWaves/Waves-ERC20-Gateway
 But rewritten to be published under FOSS license.
