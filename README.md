@@ -1,5 +1,8 @@
 # DCC <-> BTC Platform Gateway Framework
 
+![alt text](https://decentralchain.io/wp-content/uploads/2021/10/dcc-gateway.png)
+
+
 Inspired by TN Gateway inspired byHawky's Waves-ERC20 Gateway: https://github.com/PyWaves/Waves-ERC20-Gateway
 But rewritten to be published under FOSS license.
 
