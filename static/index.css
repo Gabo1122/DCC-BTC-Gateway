@@ -1,16 +1,47 @@
-html, body {
-   color: #0E1226;
-   font-family: 'Muli', sans-serif;
-   margin: 0;
- }
+ .body {
+  padding-right: 30px;
+  padding-left: 30px;
+  background-color: #1f212a;
+  color: #ff8e00;
+}
 
-body {
-   background: url(bg2.jpg) no-repeat center center fixed;
-   background-color: #0E1226;
-   -webkit-background-size: cover;
-   -moz-background-size: cover;
-   -o-background-size: cover;
-   background-size: cover;
+.heading {
+  color: #ff8e00;
+}
+
+.text-block {
+  color: #fff;
+  font-size: 20px;
+  line-height: 31px;
+}
+
+.heading-2 {
+  padding-left: 0px;
+}
+
+.image {
+  display: block;
+  width: 50%;
+  max-width: 100%;
+  margin-right: 150px;
+  margin-left: 0%;
+  float: right;
+  clear: none;
+  text-align: center;
+}
+
+.image-2 {
+  max-width: 50%;
+}
+
+.button {
+  margin-top: 15px;
+  float: left;
+  clear: none;
+  border-radius: 6px;
+  background-color: #ff8e00;
+  color: #fff;
+  text-align: right;
 }
 
 .deskHeader {
